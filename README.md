@@ -22,4 +22,4 @@ This is a web application for managing daily activities, similar to a to-do list
 Here are some screenshots showcasing the application:
 
 ### 🏠 Home Page
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/home1.png)
