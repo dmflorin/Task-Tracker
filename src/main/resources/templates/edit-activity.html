@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editare Activitate</title>
+    <link rel="stylesheet" th:href="${esteModNoapte} ? '/css/styles10.css' : '/css/styles1.css'">
+</head>
+<body>
+<h1>Editare Activitate</h1>
+<form th:action="@{/activities/{id}/edit(id=${activitate.id})}" method="post" th:object="${activitate}">
+    <label for="nume">Nume Activitate:</label>
+    <input type="text" id="nume" th:field="*{nume}">
+    <div th:if="${#fields.hasErrors('nume')}" th:errors="*{nume}" style="color: red;"></div>
+
+    <label for="status">Status:</label>
+    <input type="text" id="status" th:field="*{status}">
+    <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" style="color: red;"></div>
+
+    <label for="progres">Progres (%)</label>
+    <input type="text" id="progres" th:field="*{progres}">
+    <div th:if="${#fields.hasErrors('progres')}" th:errors="*{progres}" style="color: red;"></div>
+
+    <label for="termenLimita">Termen Limita:</label>
+    <input type="date" id="termenLimita" th:field="*{termenLimita}">
+    <div th:if="${#fields.hasErrors('termenLimita')}" th:errors="*{termenLimita}" style="color: red;"></div>
+
+    <button type="submit">Salvează</button>
+</form>
+</body>
+</html>

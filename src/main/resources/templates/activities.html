@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Activităților</title>
+    <link rel="stylesheet" th:href="${esteModNoapte} ? '/css/styles0.css' : '/css/styles00.css'">
+</head>
+<body>
+<div class="navbar">
+    <div class="navbar-links">
+    <a th:href="@{/activities}">Activități</a>
+    <a th:href="@{/activities/new}">Adaugă Activitate</a>
+    </div>
+    <form th:action="@{/toggleTheme}" method="post">
+        <button type="submit" class="navbar-button" th:text="${esteModNoapte} ? 'Comută la Mod Luminos' : 'Comută la Mod Intunecat'">
+            Schimbă Tema
+        </button>
+    </form>
+</div>
+
+<h1>Lista Activităților</h1>
+
+<div class="container">
+    <h2>Activități Urgente</h2>
+    <div class="error-box">
+        <div th:if="${activitatiUrgente.isEmpty()}">
+            <p>Nu există activități urgente.</p>
+        </div>
+        <ul>
+            <li th:each="activitate : ${activitatiUrgente}">
+                <span th:text="${activitate.nume}">Nume activitate</span> -
+                Termen Limita: <span th:text="${activitate.termenLimitaFormatat}">Data</span>
+            </li>
+        </ul>
+    </div>
+
+    <h2>Toate Activitățile</h2>
+    <table>
+        <tr>
+            <th>Nume Activitate</th>
+            <th>Status</th>
+            <th>Termen Limita</th>
+            <th>Progres (%)</th>
+            <th>Acțiuni</th>
+
+        </tr>
+        <tr th:each="activitate : ${activitati}">
+            <td th:text="${activitate.nume}"></td>
+            <td th:text="${activitate.status}"></td>
+            <td th:text="${activitate.termenLimitaFormatat}"></td>
+            <td th:text="${activitate.progres}"></td>
+            <td>
+                <form th:if="${activitate != null}" th:action="@{/activities/{id}/delete(id=${activitate.id})}" method="get" class="form1">
+                    <button type="submit" class="button-submit">Sterge</button>
+                </form>
+                <form th:if="${activitate != null}" th:action="@{/activities/{id}/edit(id=${activitate.id})}" method="get" class="form1">
+                    <button type="submit" class="button-submit">Editeaza</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:class="${esteVizibil} ? 'modal_overlay' : 'modal_overlay1'">
+    <div class="modal">
+        <h2>Esti sigur că vrei să ștergi?</h2>
+        <form th:if="${activitate != null}" th:action="@{/activities/{id}/delete(id=${activitate.id})}" method="post">
+            <button type="submit">Da</button>
+            <a th:href="@{/activities}">Nu</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>
